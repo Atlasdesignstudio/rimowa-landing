@@ -66,6 +66,7 @@
         
         .nav-links {
             display: flex;
+            transition: transform 0.3s ease;
         }
         
         .nav-link {
@@ -91,6 +92,83 @@
         
         .nav-link:hover:after {
             width: 100%;
+        }
+        
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .hamburger span {
+            width: 100%;
+            height: 3px;
+            background-color: #333;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+        
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+        
+        /* Mobile Navbar */
+        @media (max-width: 768px) {
+            .nav-links {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100vh;
+                background-color: rgba(255, 255, 255, 0.95);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+                z-index: 1000;
+            }
+        
+            .nav-links.active {
+                transform: translateX(0);
+            }
+        
+            .nav-link {
+                margin: 20px 0;
+                font-size: 1.5rem;
+                color: #333;
+            }
+        
+            .hamburger {
+                display: flex;
+            }
+        
+            .navbar {
+                padding: 15px 0;
+            }
+        
+            .nav-container {
+                align-items: center;
+            }
+        }
+        
+        /* Ensure navbar stays fixed and visible */
+        .navbar.scrolled .hamburger span {
+            background-color: #333;
         }
         
         /* Hero Section */
@@ -135,8 +213,8 @@
             transition: all 1s ease-out 0.5s;
             color: #fff;
             margin-left: auto;
-    margin-right: auto;
-    text-align: center; /* Centra el texto */
+            margin-right: auto;
+            text-align: center;
         }
         
         .hero.active .hero-content {
@@ -160,37 +238,40 @@
         }
         
         .btn {
-    display: inline-block;
-    padding: 14px 50px;
-    border: 1px solid #fff; /* Cambia #333 a #fff */
-    background-color: transparent;
-    color: #fff; /* Cambia #333 a #fff */
-    font-size: 0.9rem;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    cursor: pointer;
-    transition: all 0.4s ease;
-    text-decoration: none;
-    position: relative;
-    overflow: hidden;
-}
-
-.btn:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background-color: #fff; /* Cambia #333 a #fff si quieres que el fondo sea blanco */
-    transition: all 0.4s ease;
-    z-index: -1;
-}
-
-.btn:hover {
-    color: #333; /* Cambia a #333 o a otro color que contraste con el fondo blanco */
-}
-
+            display: inline-block;
+            padding: 14px 50px;
+            border: 1px solid #fff;
+            background-color: transparent;
+            color: #fff;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            color: #333;
+        }
+        
+        .btn:hover:before {
+            left: 0;
+        }
         
         /* Scroll Indicator */
         .scroll-indicator {
@@ -275,7 +356,7 @@
             font-size: 2rem;
             margin-bottom: 1.5rem;
             display: flex;
-            align-items: center;
+            align-items: norme;
             justify-content: center;
             width: 60px;
             height: 60px;
@@ -680,18 +761,18 @@
             border-color: #333;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-
+        
         .join .btn {
-    border: 1px solid #aaa;
-    background-color: #eee;
-    color: #333;
-    transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-.join .btn:hover {
-    background-color: #333;
-    color: #fff;
-}
+            border: 1px solid #aaa;
+            background-color: #eee;
+            color: #333;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        .join .btn:hover {
+            background-color: #333;
+            color: #fff;
+        }
         
         /* Footer */
         footer {
@@ -859,6 +940,11 @@
     <nav class="navbar">
         <div class="container nav-container">
             <a href="#" class="logo">RIMOWA</a>
+            <button class="hamburger" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
             <div class="nav-links">
                 <a href="#discover" class="nav-link">Descubrir</a>
                 <a href="#features" class="nav-link">Características</a>
@@ -1104,6 +1190,23 @@
                     cursor.style.transform = 'translate(-50%, -50%) scale(1)';
                     cursor.style.border = '1px solid rgba(0,0,0,0.3)';
                     cursorDot.style.transform = 'translate(-50%, -50%) scale(1)';
+                });
+            });
+            
+            // Hamburger menu toggle
+            const hamburger = document.querySelector('.hamburger');
+            const navLinks = document.querySelector('.nav-links');
+            
+            hamburger.addEventListener('click', () => {
+                hamburger.classList.toggle('active');
+                navLinks.classList.toggle('active');
+            });
+            
+            // Close menu when clicking a link
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', () => {
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
                 });
             });
         });
